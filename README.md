@@ -1,6 +1,6 @@
 # ESP32_Wired_Communication
 
-# ESP32 Interface Verification: UART, I²C and SPI
+
 
 Verification of the three wired interfaces on an ESP32 (WROOM-32) board using the Arduino IDE 2.3.8, with the Serial Monitor at 115200 baud (COM4).
 
