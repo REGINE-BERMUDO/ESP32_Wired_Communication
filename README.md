@@ -23,46 +23,31 @@ None of these are strapping pins (0, 2, 5, 12, 15), flash pins (6–11) or input
 
 ```mermaid
 flowchart LR
-    subgraph ESP["ESP32 WROOM-32"]
-        direction TB
-        G17["GPIO17 (UART TX)"]
-        G16["GPIO16 (UART RX)"]
-        G23["GPIO23 (SPI MOSI)"]
-        G19["GPIO19 (SPI MISO)"]
-        G21["GPIO21 (I²C SDA)"]
-        G22["GPIO22 (I²C SCL)"]
+    subgraph ESP["ESP32"]
+        G17["GPIO17 TX"]
+        G16["GPIO16 RX"]
+        G23["GPIO23 MOSI"]
+        G19["GPIO19 MISO"]
+        G18["GPIO18 SCK"]
+        G27["GPIO27 CS"]
+        G21["GPIO21 SDA"]
+        G22["GPIO22 SCL"]
         V33["3V3"]
-        GNDP["GND"]
-        G18["GPIO18 (SPI SCK) not wired"]
-        G27["GPIO27 (SPI CS) not wired"]
+        GND["GND"]
     end
 
-    subgraph MOD["I²C module (OLED or BME/BMP280)"]
-        direction TB
-        SDA["SDA"]
-        SCL["SCL"]
-        VCC["VCC"]
-        GNDM["GND"]
-    end
+    I2C["I²C module<br/>SDA, SCL, VCC, GND"]
+    SPIH["SPI header<br/>SCK, CS"]
 
-    G17 ---|"UART loopback jumper"| G16
-    G23 ---|"SPI loopback jumper"| G19
-    G21 ---|"I²C data"| SDA
-    G22 ---|"I²C clock"| SCL
-    V33 ---|"I²C power"| VCC
-    GNDP ---|"I²C ground"| GNDM
-
-    classDef unwired stroke-dasharray: 5 5,color:#888
-    class G18,G27 unwired
-
-    linkStyle 0 stroke:#1D9E75,stroke-width:3px
-    linkStyle 1 stroke:#7F77DD,stroke-width:3px
-    linkStyle 2 stroke:#378ADD,stroke-width:3px
-    linkStyle 3 stroke:#EF9F27,stroke-width:3px
-    linkStyle 4 stroke:#E24B4A,stroke-width:3px
-    linkStyle 5 stroke:#5F5E5A,stroke-width:3px
+    G17 --- G16
+    G23 --- G19
+    G18 --- SPIH
+    G27 --- SPIH
+    G21 --- I2C
+    G22 --- I2C
+    V33 --- I2C
+    GND --- I2C
 ```
-
 | Connection | From | To |
 |---|---|---|
 | UART loopback jumper | GPIO17 (TX) | GPIO16 (RX) |
